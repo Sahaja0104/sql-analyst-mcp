@@ -1,0 +1,1 @@
+"""SQL Analyst MCP server."""

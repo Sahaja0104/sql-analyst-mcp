@@ -1,0 +1,13 @@
+﻿[
+{"id": "M01", "sql": "SELECT g.name, COUNT(*) AS track_count FROM genre g JOIN track t ON t.genre_id = g.genre_id GROUP BY g.genre_id, g.name ORDER BY track_count DESC LIMIT 5"},
+{"id": "M02", "sql": "SELECT country, COUNT(*) AS customer_count FROM customer GROUP BY country HAVING COUNT(*) > 4"},
+{"id": "M03", "sql": "SELECT billing_country, SUM(total) AS total_revenue FROM invoice GROUP BY billing_country ORDER BY total_revenue DESC LIMIT 5"},
+{"id": "M04", "sql": "SELECT a.name, COUNT(*) AS album_count FROM artist a JOIN album al ON al.artist_id = a.artist_id GROUP BY a.artist_id, a.name ORDER BY album_count DESC LIMIT 3"},
+{"id": "M05", "sql": "SELECT EXTRACT(YEAR FROM invoice_date)::int AS year, SUM(total) AS revenue FROM invoice GROUP BY 1 ORDER BY 1"},
+{"id": "M06", "sql": "SELECT m.name, COUNT(t.track_id) AS track_count FROM media_type m LEFT JOIN track t ON t.media_type_id = m.media_type_id GROUP BY m.media_type_id, m.name"},
+{"id": "M07", "sql": "SELECT e.first_name, e.last_name, COUNT(c.customer_id) AS customer_count FROM employee e JOIN customer c ON c.support_rep_id = e.employee_id GROUP BY e.employee_id, e.first_name, e.last_name"},
+{"id": "M08", "sql": "SELECT a.name FROM artist a LEFT JOIN album al ON al.artist_id = a.artist_id WHERE al.album_id IS NULL"},
+{"id": "M09", "sql": "SELECT t.name, SUM(il.quantity) AS total_quantity FROM invoice_line il JOIN track t ON t.track_id = il.track_id GROUP BY t.track_id, t.name ORDER BY total_quantity DESC, t.name ASC LIMIT 5"},
+{"id": "M10", "sql": "SELECT p.name, COUNT(*) AS track_count FROM playlist p JOIN playlist_track pt ON pt.playlist_id = p.playlist_id GROUP BY p.playlist_id, p.name ORDER BY track_count DESC LIMIT 3"},
+{"id": "M11", "sql": "SELECT al.title, COUNT(*) AS track_count FROM album al JOIN track t ON t.album_id = al.album_id GROUP BY al.album_id, al.title HAVING COUNT(*) > 20"}
+]

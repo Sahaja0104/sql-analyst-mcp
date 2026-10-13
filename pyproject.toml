@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sql-analyst-mcp"
+version = "0.1.0"
+description = "An MCP server that lets LLMs query a PostgreSQL database safely (read-only, validated SQL)."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=2.0.0,<3",     # official MCP Python SDK v2 (MCPServer replaced FastMCP)
+    "psycopg[binary]>=3.1",   # PostgreSQL driver
+    "sqlglot>=25.0",          # parses SQL so we can validate it before running
+    "python-dotenv>=1.0",     # loads settings from a .env file
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+eval = [
+    "anthropic>=0.40",        # only used by evals/run_eval.py, not by the server
+]
+
+[project.scripts]
+sql-analyst-mcp = "sql_analyst.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sql_analyst"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

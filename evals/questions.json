@@ -1,0 +1,212 @@
+[
+  {
+    "id": "E01",
+    "difficulty": "easy",
+    "question": "How many artists are in the database?",
+    "gold_sql": "SELECT COUNT(*) FROM artist",
+    "ordered": false
+  },
+  {
+    "id": "E02",
+    "difficulty": "easy",
+    "question": "How many tracks are longer than 5 minutes (300000 milliseconds)?",
+    "gold_sql": "SELECT COUNT(*) FROM track WHERE milliseconds > 300000",
+    "ordered": false
+  },
+  {
+    "id": "E03",
+    "difficulty": "easy",
+    "question": "List the names of all genres in alphabetical order.",
+    "gold_sql": "SELECT name FROM genre ORDER BY name",
+    "ordered": true
+  },
+  {
+    "id": "E04",
+    "difficulty": "easy",
+    "question": "How many customers are from Brazil?",
+    "gold_sql": "SELECT COUNT(*) FROM customer WHERE country = 'Brazil'",
+    "ordered": false
+  },
+  {
+    "id": "E05",
+    "difficulty": "easy",
+    "question": "What is the total revenue from all invoices?",
+    "gold_sql": "SELECT SUM(total) FROM invoice",
+    "ordered": false
+  },
+  {
+    "id": "E06",
+    "difficulty": "easy",
+    "question": "What are the 3 longest tracks? Return the track name and its length in milliseconds, longest first.",
+    "gold_sql": "SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 3",
+    "ordered": true
+  },
+  {
+    "id": "E07",
+    "difficulty": "easy",
+    "question": "List the first and last names of all customers from Canada, ordered by last name and then first name.",
+    "gold_sql": "SELECT first_name, last_name FROM customer WHERE country = 'Canada' ORDER BY last_name, first_name",
+    "ordered": true
+  },
+  {
+    "id": "E08",
+    "difficulty": "easy",
+    "question": "How many albums does the artist 'Iron Maiden' have?",
+    "gold_sql": "SELECT COUNT(*) FROM album a JOIN artist ar ON ar.artist_id = a.artist_id WHERE ar.name = 'Iron Maiden'",
+    "ordered": false
+  },
+  {
+    "id": "E09",
+    "difficulty": "easy",
+    "question": "What is the average track length in seconds, rounded to 2 decimals?",
+    "gold_sql": "SELECT ROUND(AVG(milliseconds) / 1000.0, 2) FROM track",
+    "ordered": false
+  },
+  {
+    "id": "E10",
+    "difficulty": "easy",
+    "question": "How many employees have the title 'Sales Support Agent'?",
+    "gold_sql": "SELECT COUNT(*) FROM employee WHERE title = 'Sales Support Agent'",
+    "ordered": false
+  },
+  {
+    "id": "M01",
+    "difficulty": "medium",
+    "question": "Which 5 genres have the most tracks? Return the genre name and the number of tracks, highest first.",
+    "gold_sql": "SELECT g.name, COUNT(*) AS tracks FROM track t JOIN genre g ON g.genre_id = t.genre_id GROUP BY g.name ORDER BY tracks DESC, g.name LIMIT 5",
+    "ordered": true
+  },
+  {
+    "id": "M02",
+    "difficulty": "medium",
+    "question": "Which countries have more than 4 customers? Return the country and the number of customers.",
+    "gold_sql": "SELECT country, COUNT(*) FROM customer GROUP BY country HAVING COUNT(*) > 4",
+    "ordered": false
+  },
+  {
+    "id": "M03",
+    "difficulty": "medium",
+    "question": "What are the top 5 billing countries by total invoice revenue? Return the country and the total revenue, highest first.",
+    "gold_sql": "SELECT billing_country, SUM(total) AS revenue FROM invoice GROUP BY billing_country ORDER BY revenue DESC, billing_country LIMIT 5",
+    "ordered": true
+  },
+  {
+    "id": "M04",
+    "difficulty": "medium",
+    "question": "Which 3 artists have the most albums? Return the artist name and the number of albums, highest first.",
+    "gold_sql": "SELECT ar.name, COUNT(*) AS albums FROM album a JOIN artist ar ON ar.artist_id = a.artist_id GROUP BY ar.artist_id, ar.name ORDER BY albums DESC, ar.name LIMIT 3",
+    "ordered": true
+  },
+  {
+    "id": "M05",
+    "difficulty": "medium",
+    "question": "What is the total invoice revenue for each year? Return the year and the revenue, ordered by year.",
+    "gold_sql": "SELECT EXTRACT(YEAR FROM invoice_date)::int AS year, SUM(total) FROM invoice GROUP BY 1 ORDER BY 1",
+    "ordered": true
+  },
+  {
+    "id": "M06",
+    "difficulty": "medium",
+    "question": "How many tracks are there for each media type? Return the media type name and the number of tracks.",
+    "gold_sql": "SELECT m.name, COUNT(*) FROM track t JOIN media_type m ON m.media_type_id = t.media_type_id GROUP BY m.name",
+    "ordered": false
+  },
+  {
+    "id": "M07",
+    "difficulty": "medium",
+    "question": "For each employee who supports at least one customer, return the employee's first name, last name and the number of customers they support.",
+    "gold_sql": "SELECT e.first_name, e.last_name, COUNT(*) FROM employee e JOIN customer c ON c.support_rep_id = e.employee_id GROUP BY e.employee_id, e.first_name, e.last_name",
+    "ordered": false
+  },
+  {
+    "id": "M08",
+    "difficulty": "medium",
+    "question": "Which artists have no albums? Return only the artist names.",
+    "gold_sql": "SELECT ar.name FROM artist ar LEFT JOIN album a ON a.artist_id = ar.artist_id WHERE a.album_id IS NULL",
+    "ordered": false
+  },
+  {
+    "id": "M09",
+    "difficulty": "medium",
+    "question": "Which 5 tracks were sold the most (total quantity across all invoice lines)? Return the track name and total quantity sold, highest first, and break ties alphabetically by track name.",
+    "gold_sql": "SELECT t.name, SUM(il.quantity) AS sold FROM invoice_line il JOIN track t ON t.track_id = il.track_id GROUP BY t.track_id, t.name ORDER BY sold DESC, t.name LIMIT 5",
+    "ordered": true
+  },
+  {
+    "id": "M10",
+    "difficulty": "medium",
+    "question": "Which 3 playlists contain the most tracks? Return the playlist name and the number of tracks, highest first.",
+    "gold_sql": "SELECT p.name, COUNT(*) AS tracks FROM playlist p JOIN playlist_track pt ON pt.playlist_id = p.playlist_id GROUP BY p.playlist_id, p.name ORDER BY tracks DESC, p.playlist_id LIMIT 3",
+    "ordered": true
+  },
+  {
+    "id": "M11",
+    "difficulty": "medium",
+    "question": "Which albums have more than 20 tracks? Return the album title and the number of tracks.",
+    "gold_sql": "SELECT al.title, COUNT(*) FROM album al JOIN track t ON t.album_id = al.album_id GROUP BY al.album_id, al.title HAVING COUNT(*) > 20",
+    "ordered": false
+  },
+  {
+    "id": "H01",
+    "difficulty": "hard",
+    "question": "Which customers have spent more than the average total spending per customer? Return first name, last name and total spent.",
+    "gold_sql": "WITH spend AS (SELECT c.customer_id, c.first_name, c.last_name, SUM(i.total) AS total_spent FROM customer c JOIN invoice i ON i.customer_id = c.customer_id GROUP BY c.customer_id, c.first_name, c.last_name) SELECT first_name, last_name, total_spent FROM spend WHERE total_spent > (SELECT AVG(total_spent) FROM spend)",
+    "ordered": false
+  },
+  {
+    "id": "H02",
+    "difficulty": "hard",
+    "question": "Which artist has the most tracks in the 'Jazz' genre? Return the artist name and the number of Jazz tracks.",
+    "gold_sql": "SELECT ar.name, COUNT(*) AS jazz_tracks FROM track t JOIN genre g ON g.genre_id = t.genre_id JOIN album al ON al.album_id = t.album_id JOIN artist ar ON ar.artist_id = al.artist_id WHERE g.name = 'Jazz' GROUP BY ar.artist_id, ar.name ORDER BY jazz_tracks DESC, ar.name LIMIT 1",
+    "ordered": true
+  },
+  {
+    "id": "H03",
+    "difficulty": "hard",
+    "question": "List every employee's first and last name together with their manager's first and last name. Employees without a manager should still appear, with empty manager names.",
+    "gold_sql": "SELECT e.first_name, e.last_name, m.first_name, m.last_name FROM employee e LEFT JOIN employee m ON m.employee_id = e.reports_to",
+    "ordered": false
+  },
+  {
+    "id": "H04",
+    "difficulty": "hard",
+    "question": "Which single month had the highest total invoice revenue? Return the year, the month number and the revenue.",
+    "gold_sql": "SELECT EXTRACT(YEAR FROM invoice_date)::int, EXTRACT(MONTH FROM invoice_date)::int, SUM(total) AS revenue FROM invoice GROUP BY 1, 2 ORDER BY revenue DESC, 1, 2 LIMIT 1",
+    "ordered": true
+  },
+  {
+    "id": "H05",
+    "difficulty": "hard",
+    "question": "Which customers have bought tracks from at least 8 different genres? Return first name, last name and the number of distinct genres.",
+    "gold_sql": "SELECT c.first_name, c.last_name, COUNT(DISTINCT t.genre_id) FROM customer c JOIN invoice i ON i.customer_id = c.customer_id JOIN invoice_line il ON il.invoice_id = i.invoice_id JOIN track t ON t.track_id = il.track_id GROUP BY c.customer_id, c.first_name, c.last_name HAVING COUNT(DISTINCT t.genre_id) >= 8",
+    "ordered": false
+  },
+  {
+    "id": "H06",
+    "difficulty": "hard",
+    "question": "How many customers made their very first purchase (earliest invoice) in the year 2022?",
+    "gold_sql": "SELECT COUNT(*) FROM (SELECT customer_id, MIN(invoice_date) AS first_date FROM invoice GROUP BY customer_id) x WHERE EXTRACT(YEAR FROM first_date) = 2022",
+    "ordered": false
+  },
+  {
+    "id": "H07",
+    "difficulty": "hard",
+    "question": "What are the top 3 genres by sales revenue (sum of unit price times quantity on invoice lines)? Return the genre name and the revenue, highest first.",
+    "gold_sql": "SELECT g.name, SUM(il.unit_price * il.quantity) AS revenue FROM invoice_line il JOIN track t ON t.track_id = il.track_id JOIN genre g ON g.genre_id = t.genre_id GROUP BY g.genre_id, g.name ORDER BY revenue DESC, g.name LIMIT 3",
+    "ordered": true
+  },
+  {
+    "id": "H08",
+    "difficulty": "hard",
+    "question": "For the top 3 billing countries by revenue, what percentage of total revenue (all countries) does each contribute, rounded to 2 decimals? Return the country and the percentage, highest first.",
+    "gold_sql": "SELECT billing_country, ROUND(100.0 * SUM(total) / (SELECT SUM(total) FROM invoice), 2) AS pct FROM invoice GROUP BY billing_country ORDER BY SUM(total) DESC, billing_country LIMIT 3",
+    "ordered": true
+  },
+  {
+    "id": "H09",
+    "difficulty": "hard",
+    "question": "How many different tracks appear in more than one playlist?",
+    "gold_sql": "SELECT COUNT(*) FROM (SELECT track_id FROM playlist_track GROUP BY track_id HAVING COUNT(*) > 1) x",
+    "ordered": false
+  }
+]

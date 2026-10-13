@@ -1,0 +1,12 @@
+﻿[
+  {"id": "E01", "sql": "SELECT COUNT(*) FROM artist"},
+  {"id": "E02", "sql": "SELECT COUNT(*) FROM track WHERE milliseconds > 300000"},
+  {"id": "E03", "sql": "SELECT name FROM genre ORDER BY name"},
+  {"id": "E04", "sql": "SELECT COUNT(*) FROM customer WHERE country = 'Brazil'"},
+  {"id": "E05", "sql": "SELECT SUM(total) FROM invoice"},
+  {"id": "E06", "sql": "SELECT name, milliseconds FROM track ORDER BY milliseconds DESC LIMIT 3"},
+  {"id": "E07", "sql": "SELECT first_name, last_name FROM customer WHERE country = 'Canada' ORDER BY last_name, first_name"},
+  {"id": "E08", "sql": "SELECT COUNT(*) FROM album al JOIN artist ar ON ar.artist_id = al.artist_id WHERE ar.name = 'Iron Maiden'"},
+  {"id": "E09", "sql": "SELECT ROUND(AVG(milliseconds) / 1000.0, 2) FROM track"},
+  {"id": "E10", "sql": "SELECT COUNT(*) FROM employee WHERE title = 'Sales Support Agent'"}
+]

@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.14"]
+
+    # A real PostgreSQL 16 database, started next to the tests (same settings as docker-compose.yml).
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin_pass
+          POSTGRES_DB: chinook
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U admin -d chinook"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Make sure the psql client is available
+        run: command -v psql >/dev/null || (sudo apt-get update && sudo apt-get install -y postgresql-client)
+
+      - name: Load the Chinook data and the read-only role
+        env:
+          PGPASSWORD: admin_pass
+        run: |
+          psql -h localhost -p 5433 -U admin -d chinook -v ON_ERROR_STOP=1 -q -f db/init/01_chinook.sql
+          psql -h localhost -p 5433 -U admin -d chinook -v ON_ERROR_STOP=1 -q -f db/init/02_roles.sql
+
+      - name: Install the project
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run all tests
+        env:
+          REQUIRE_DB: "1"   # a missing database must fail the build, not skip the tests
+        run: python -m pytest -v

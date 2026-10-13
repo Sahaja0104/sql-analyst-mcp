@@ -1,0 +1,24 @@
+You are being evaluated on text-to-SQL accuracy. You have the "sql-analyst" tools, which give read-only access to a PostgreSQL database (a music store called Chinook).
+
+For EACH question below:
+1. Use get_schema if you need table or column names.
+2. Write ONE PostgreSQL SELECT query that answers it. You may test it with run_query.
+3. Return exactly the columns the question asks for, in the order the question lists them.
+
+When you are done, reply with ONLY one JSON array inside a ```json code block, with one object per question and the final SQL you believe is correct:
+
+[{"id": "E01", "sql": "SELECT ..."}, {"id": "E02", "sql": "SELECT ..."}]
+
+Do not ask me questions, and do not add explanations outside the code block.
+
+QUESTIONS
+E01: How many artists are in the database?
+E02: How many tracks are longer than 5 minutes (300000 milliseconds)?
+E03: List the names of all genres in alphabetical order.
+E04: How many customers are from Brazil?
+E05: What is the total revenue from all invoices?
+E06: What are the 3 longest tracks? Return the track name and its length in milliseconds, longest first.
+E07: List the first and last names of all customers from Canada, ordered by last name and then first name.
+E08: How many albums does the artist 'Iron Maiden' have?
+E09: What is the average track length in seconds, rounded to 2 decimals?
+E10: How many employees have the title 'Sales Support Agent'?

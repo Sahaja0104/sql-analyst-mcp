@@ -1,0 +1,23 @@
+You are being evaluated on text-to-SQL accuracy. You have the "sql-analyst" tools, which give read-only access to a PostgreSQL database (a music store called Chinook).
+
+For EACH question below:
+1. Use get_schema if you need table or column names.
+2. Write ONE PostgreSQL SELECT query that answers it. You may test it with run_query.
+3. Return exactly the columns the question asks for, in the order the question lists them.
+
+When you are done, reply with ONLY one JSON array inside a ```json code block, with one object per question and the final SQL you believe is correct:
+
+[{"id": "H01", "sql": "SELECT ..."}, {"id": "H02", "sql": "SELECT ..."}]
+
+Do not ask me questions, and do not add explanations outside the code block.
+
+QUESTIONS
+H01: Which customers have spent more than the average total spending per customer? Return first name, last name and total spent.
+H02: Which artist has the most tracks in the 'Jazz' genre? Return the artist name and the number of Jazz tracks.
+H03: List every employee's first and last name together with their manager's first and last name. Employees without a manager should still appear, with empty manager names.
+H04: Which single month had the highest total invoice revenue? Return the year, the month number and the revenue.
+H05: Which customers have bought tracks from at least 8 different genres? Return first name, last name and the number of distinct genres.
+H06: How many customers made their very first purchase (earliest invoice) in the year 2022?
+H07: What are the top 3 genres by sales revenue (sum of unit price times quantity on invoice lines)? Return the genre name and the revenue, highest first.
+H08: For the top 3 billing countries by revenue, what percentage of total revenue (all countries) does each contribute, rounded to 2 decimals? Return the country and the percentage, highest first.
+H09: How many different tracks appear in more than one playlist?

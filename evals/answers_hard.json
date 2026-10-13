@@ -1,0 +1,11 @@
+﻿[
+{"id": "H01", "sql": "WITH t AS (SELECT c.customer_id, c.first_name, c.last_name, SUM(i.total) AS total_spent FROM customer c JOIN invoice i ON i.customer_id = c.customer_id GROUP BY c.customer_id, c.first_name, c.last_name) SELECT first_name, last_name, total_spent FROM t WHERE total_spent > (SELECT AVG(total_spent) FROM t) ORDER BY total_spent DESC"},
+{"id": "H02", "sql": "SELECT ar.name, COUNT(*) AS jazz_tracks FROM track t JOIN genre g ON g.genre_id = t.genre_id JOIN album al ON al.album_id = t.album_id JOIN artist ar ON ar.artist_id = al.artist_id WHERE g.name = 'Jazz' GROUP BY ar.artist_id, ar.name ORDER BY jazz_tracks DESC LIMIT 1"},
+{"id": "H03", "sql": "SELECT e.first_name, e.last_name, m.first_name AS manager_first_name, m.last_name AS manager_last_name FROM employee e LEFT JOIN employee m ON m.employee_id = e.reports_to ORDER BY e.employee_id"},
+{"id": "H04", "sql": "SELECT EXTRACT(YEAR FROM invoice_date)::int AS year, EXTRACT(MONTH FROM invoice_date)::int AS month, SUM(total) AS revenue FROM invoice GROUP BY 1, 2 ORDER BY revenue DESC LIMIT 1"},
+{"id": "H05", "sql": "SELECT c.first_name, c.last_name, COUNT(DISTINCT t.genre_id) AS genre_count FROM customer c JOIN invoice i ON i.customer_id = c.customer_id JOIN invoice_line il ON il.invoice_id = i.invoice_id JOIN track t ON t.track_id = il.track_id GROUP BY c.customer_id, c.first_name, c.last_name HAVING COUNT(DISTINCT t.genre_id) >= 8 ORDER BY genre_count DESC, c.last_name"},
+{"id": "H06", "sql": "SELECT COUNT(*) FROM (SELECT customer_id FROM invoice GROUP BY customer_id HAVING EXTRACT(YEAR FROM MIN(invoice_date)) = 2022) x"},
+{"id": "H07", "sql": "SELECT g.name, SUM(il.unit_price * il.quantity) AS revenue FROM invoice_line il JOIN track t ON t.track_id = il.track_id JOIN genre g ON g.genre_id = t.genre_id GROUP BY g.genre_id, g.name ORDER BY revenue DESC LIMIT 3"},
+{"id": "H08", "sql": "SELECT billing_country, ROUND(100.0 * SUM(total) / (SELECT SUM(total) FROM invoice), 2) AS pct FROM invoice GROUP BY billing_country ORDER BY SUM(total) DESC LIMIT 3"},
+{"id": "H09", "sql": "SELECT COUNT(*) FROM (SELECT track_id FROM playlist_track GROUP BY track_id HAVING COUNT(DISTINCT playlist_id) > 1) x"}
+]

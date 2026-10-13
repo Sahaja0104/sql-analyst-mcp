@@ -1,0 +1,25 @@
+You are being evaluated on text-to-SQL accuracy. You have the "sql-analyst" tools, which give read-only access to a PostgreSQL database (a music store called Chinook).
+
+For EACH question below:
+1. Use get_schema if you need table or column names.
+2. Write ONE PostgreSQL SELECT query that answers it. You may test it with run_query.
+3. Return exactly the columns the question asks for, in the order the question lists them.
+
+When you are done, reply with ONLY one JSON array inside a ```json code block, with one object per question and the final SQL you believe is correct:
+
+[{"id": "M01", "sql": "SELECT ..."}, {"id": "M02", "sql": "SELECT ..."}]
+
+Do not ask me questions, and do not add explanations outside the code block.
+
+QUESTIONS
+M01: Which 5 genres have the most tracks? Return the genre name and the number of tracks, highest first.
+M02: Which countries have more than 4 customers? Return the country and the number of customers.
+M03: What are the top 5 billing countries by total invoice revenue? Return the country and the total revenue, highest first.
+M04: Which 3 artists have the most albums? Return the artist name and the number of albums, highest first.
+M05: What is the total invoice revenue for each year? Return the year and the revenue, ordered by year.
+M06: How many tracks are there for each media type? Return the media type name and the number of tracks.
+M07: For each employee who supports at least one customer, return the employee's first name, last name and the number of customers they support.
+M08: Which artists have no albums? Return only the artist names.
+M09: Which 5 tracks were sold the most (total quantity across all invoice lines)? Return the track name and total quantity sold, highest first, and break ties alphabetically by track name.
+M10: Which 3 playlists contain the most tracks? Return the playlist name and the number of tracks, highest first.
+M11: Which albums have more than 20 tracks? Return the album title and the number of tracks.
