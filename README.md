@@ -6,6 +6,7 @@
 An [MCP](https://modelcontextprotocol.io) server that lets an LLM answer plain-English questions about a PostgreSQL database **safely**: validated SQL, read-only access, a query timeout and a row cap. Scored 30/30 on a 30-question benchmark and covered by 102 automated tests.
 
 <!-- DEMO: after recording, save the GIF as docs/demo.gif and replace this comment with: ![Demo](docs/demo.gif) -->
+![Demo](docs/demo.gif)
 
 > **You:** Who are the top 3 customers by total spending?
 > **Claude:** *(calls `get_schema`, then `run_query`)* Helena Holý (49.62), Richard Cunningham (47.62) and Luis Rojas (46.62).
